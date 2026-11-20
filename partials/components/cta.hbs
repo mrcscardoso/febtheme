@@ -1,25 +1,23 @@
+{{!-- Newsletter (DESIGN.md §6.2.4): card em azul claro. Parâmetro: email_field_id. Oculta para membros logados. --}}
 {{#if @site.members_enabled}}
     {{#unless @member}}
-        {{#match @custom.header_style "!=" "Landing"}}
-        {{#match @custom.header_style "!=" "Search"}}
-        {{#match @custom.header_style "!=" "Off"}}
-        {{#match posts.length ">=" 7}}
-            <section class="gh-cta gh-outer">
-                <div class="gh-cta-inner gh-inner">
-                    <div class="gh-cta-content">
-                        <h2 class="gh-cta-title is-title">
+        <section class="gh-cta feb-newsletter gh-outer">
+            <div class="gh-inner">
+                <div class="feb-newsletter-card">
+                    <div class="feb-newsletter-head">
+                        <span class="feb-newsletter-icon" aria-hidden="true">{{> "icons/mail"}}</span>
+                        <h2 class="feb-newsletter-title is-title">
                             {{#if @custom.signup_heading}}{{@custom.signup_heading}}{{else}}{{@site.title}}{{/if}}
                         </h2>
-                        <p class="gh-cta-description is-body">
-                            {{#if @custom.signup_subheading}}{{@custom.signup_subheading}}{{else}}{{@site.description}}{{/if}}
-                        </p>
                     </div>
-                    {{> "email-subscription" email_field_id="cta-email"}}
+                    {{!-- Texto-padrão do Ghost para convite à inscrição (chave oficial de @tryghost/theme-translations;
+                         tradução pt-BR em locales-local/pt-BR.json) --}}
+                    <p class="feb-newsletter-text">{{t "Don’t miss out on the latest issues. Sign up now to get access to the library of members-only issues."}}</p>
+                    <div class="feb-newsletter-form">
+                        {{> "email-subscription" email_field_id=email_field_id}}
+                    </div>
                 </div>
-            </section>
-        {{/match}}
-        {{/match}}
-        {{/match}}
-        {{/match}}
+            </div>
+        </section>
     {{/unless}}
 {{/if}}

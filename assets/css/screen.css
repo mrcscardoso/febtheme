@@ -45,6 +45,7 @@ production stylesheet in assets/built/screen.css
   21.3. Footer signup
   21.4. Social links
 22. Lightbox
+23. febtheme (DESIGN.md)
 
 */
 
@@ -3447,4 +3448,1514 @@ body[class^="gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-head
 
 .gh-button-share:hover {
     border-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 23. febtheme
+/* ------------------------------------------------------------
+Direção visual descrita em .design/DESIGN.md. Esta seção vem por
+último de propósito: sobrescreve o Source sem alterar as regras
+originais. O tema usa html { font-size: 62.5% } (1rem = 10px), por
+isso os valores abaixo estão em px, como no DESIGN.md.
+/* ---------------------------------------------------------- */
+
+/* 23.1. Tokens (DESIGN.md §2–§5 e anexo) */
+
+:root {
+    --color-bg: var(--background-color, #F9F9F9);
+    --color-ink: #121212;
+    --color-muted: #626262;
+    --color-rule: #DEDEDE;
+    --color-field: #D5D5D5;
+    --color-accent: var(--ghost-accent-color, #3772FF);
+    /* A cor de destaque do painel do Ghost (#3772FF) é usada sem alteração em
+       botões, rótulos/tags e rodapé (decisão #1 revista: opção A) */
+    --color-accent-text: var(--color-accent);
+    --color-accent-solid: var(--color-accent);
+    --color-accent-hover: color-mix(in srgb, var(--color-accent) 85%, var(--color-ink));
+    --color-on-accent: #FFFFFF;
+    --color-on-accent-rule: rgb(255 255 255 / 0.3);
+    --color-surface: color-mix(in srgb, var(--color-ink) 5%, var(--color-bg));
+    /* Tom claro do azul do tema (8% sobre o fundo): newsletter e callout do editor */
+    --color-accent-tint: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg));
+
+    /* Variáveis do Source apontando para a nova paleta */
+    --color-darker-gray: var(--color-ink);
+    --color-primary-text: var(--color-ink);
+    --color-secondary-text: var(--color-muted);
+    --color-border: var(--color-rule);
+    --color-lighter-gray: var(--color-surface);
+
+    --font-heading: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --fw-heading: 600; /* peso dos títulos (Poppins 600) */
+    --fs-hero: 52px;
+    --fs-newsletter: 44px;
+    --fs-section: 28px;
+    --fs-card: 22px;
+
+    /* Ritmo vertical: entre seções e entre um título e seu conteúdo */
+    --space-section: 64px;
+    --space-block: 40px;
+
+    --radius: 8px;        /* imagens e blocos de conteúdo */
+    --radius-pill: 999px; /* botões, chips, rótulos, campos */
+    --page-padding: clamp(20px, 5vw, 72px);
+    --container-width: 1296px;
+    --container-gap: var(--page-padding);
+    --grid-gap: 28px;
+}
+
+@media (max-width: 991px) {
+    :root {
+        --fs-hero: 44px;
+        --fs-newsletter: 36px;
+        --fs-section: 26px;
+        --space-section: 56px;
+        --space-block: 32px;
+    }
+}
+
+@media (max-width: 575px) {
+    :root {
+        --fs-hero: 36px;
+        --fs-newsletter: 30px;
+        --fs-section: 24px;
+        --fs-card: 20px;
+        --space-section: 44px;
+        --space-block: 24px;
+    }
+}
+
+/* 23.2. Base */
+
+body {
+    font-family: var(--gh-font-body, var(--font-sans));
+    font-size: 1.6rem;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+}
+
+h1, h2, h3, h4, h5, h6,
+.is-title {
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-weight: var(--fw-heading);
+    letter-spacing: 0;
+    overflow-wrap: break-word;
+}
+
+a {
+    color: var(--color-ink);
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+.gh-outer {
+    padding-inline: var(--page-padding);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+}
+
+.feb-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Rótulos em caixa-alta (mínimo de 11px, decisão #7) */
+.feb-label,
+.feb-hero-label,
+.feb-card-tag,
+.gh-article-tag {
+    /* Tamanho único para todos os rótulos/tags do site (igual ao do post) */
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+}
+
+
+/* Linha de meta: 17 NOV, 2026 · 5 MIN */
+.feb-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 6px;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted);
+}
+
+.feb-meta svg {
+    width: 11px;
+    height: 11px;
+}
+
+/* Selo de post para assinantes (membros/pago): pílula azul com cadeado e "PARA ASSINANTES".
+   Efeito sutil: a cada 3,5s um halo no tom do azul se expande ao redor do selo e se desfaz.
+   Sem deslocamento; no hover/foco do card o selo só escurece. Estático com prefers-reduced-motion. */
+.feb-badge {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    height: 22px;
+    margin-right: 4px;
+    padding: 0 9px 0 7px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    color: var(--color-on-accent);
+    background-color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    animation: feb-badge-halo 3.5s ease-out 1s infinite;
+    transition: background-color 0.2s ease;
+}
+
+/* Cadeado ≈ 1,2× a altura das maiúsculas do texto do selo, centrado opticamente */
+.feb-meta .feb-badge-icon {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+}
+
+.feb-card:hover .feb-badge,
+.feb-card:focus-within .feb-badge {
+    background-color: var(--color-accent-hover);
+}
+
+@keyframes feb-badge-halo {
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 35%, transparent);
+    }
+
+    40%, 100% {
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 0%, transparent);
+    }
+}
+
+/* 23.3. Botões e links (§5) */
+
+.gh-button {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    padding: 0 22px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--color-on-accent);
+    background-color: var(--color-accent-solid);
+    border: 0;
+    border-radius: var(--radius-pill);
+    transition: background-color 0.15s ease;
+}
+
+.gh-button:hover {
+    opacity: 1;
+    color: var(--color-on-accent);
+    background-color: var(--color-accent-hover);
+}
+
+.gh-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.feb-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--color-ink);
+    background: none;
+    border: 0;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+}
+
+.feb-icon-button:hover {
+    background-color: var(--color-surface);
+}
+
+.feb-icon-button svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+}
+
+.feb-more-link {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-accent-text);
+}
+
+.feb-more-link svg {
+    width: 11px;
+    height: 11px;
+    color: var(--color-accent-text);
+    transition: transform 0.15s ease;
+}
+
+.feb-more-link:hover svg {
+    transform: translate(2px, -2px);
+}
+
+/* 23.4. Cabeçalho (§6.1) — estático */
+
+#gh-navigation.feb-header {
+    height: auto;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: var(--color-bg);
+}
+
+.feb-header-inner {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 28px;
+}
+
+.feb-logo {
+    min-width: 0;
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: 28px;
+    font-weight: var(--fw-heading);
+    line-height: 1;
+    overflow-wrap: anywhere;
+    color: var(--color-ink);
+}
+
+.feb-logo.is-text::after {
+    content: ".";
+    color: var(--color-accent);
+}
+
+.feb-logo img {
+    display: block;
+    max-width: 100%;
+    max-height: 40px;
+    height: auto;
+}
+
+.feb-header-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 18px;
+    align-items: center;
+}
+
+.feb-header-members {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-left: 14px;
+}
+
+.feb-signin {
+    padding: 12px 0;
+}
+
+.feb-signin:hover {
+    color: var(--color-accent-text);
+}
+
+/* Botão de menu (.gh-burger, padrão do tema) e painel: só no celular (≤ 767px,
+   o mesmo limite usado pelo script do Source em main.js) */
+.feb-header .gh-burger {
+    display: none;
+    margin: 0;
+}
+
+.feb-mobile-menu {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .feb-header-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-block: 16px;
+    }
+
+    .feb-logo {
+        font-size: 22px;
+    }
+
+    .feb-logo img {
+        max-height: 32px;
+    }
+
+    .feb-header-actions {
+        gap: 4px;
+    }
+
+    /* No celular, Entrar/Inscrever-se ficam dentro do menu */
+    .feb-header-members {
+        display: none;
+    }
+
+    .feb-header .gh-burger {
+        display: inline-flex;
+    }
+
+    /* Menu aberto: o Source fixa #gh-navigation em tela cheia e trava a rolagem */
+    .is-open#gh-navigation.feb-header {
+        background-color: var(--color-bg);
+    }
+
+    .is-open .feb-mobile-menu {
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: column;
+        gap: 40px;
+        padding-block: 32px 40px;
+    }
+
+    #gh-navigation .feb-mobile-menu .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    #gh-navigation .feb-mobile-menu .nav a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        font-family: var(--gh-font-heading, var(--font-heading));
+        font-size: 24px;
+        font-weight: var(--fw-heading);
+        color: var(--color-ink);
+    }
+
+    #gh-navigation .feb-mobile-menu .nav-current a {
+        color: var(--color-accent-text);
+    }
+
+    .feb-mobile-members {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #gh-navigation .feb-mobile-members .gh-button {
+        width: 100%;
+        height: 48px;
+        font-size: 14px;
+    }
+
+    #gh-navigation .feb-mobile-members .feb-signin {
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+/* 23.5. Destaque da home (§6.2.1) */
+
+.feb-hero {
+    padding-top: var(--space-block);
+}
+
+.feb-hero-inner {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.feb-hero-inner:not(:has(.feb-hero-media)) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.feb-hero-label {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    margin: 0;
+}
+
+.feb-hero-label a {
+    color: inherit;
+}
+
+/* A coluna de texto do destaque é um container: o título acompanha a largura dela */
+.feb-hero-text {
+    container-type: inline-size;
+}
+
+.feb-hero-title {
+    margin-top: 32px;
+    /* Proporcional à coluna (≈ 9,5% da largura), limitado ao tamanho do design (--fs-hero) */
+    font-size: clamp(30px, 9.5cqi, var(--fs-hero));
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    /* pretty (não balance): as linhas usam toda a largura da coluna; só evita palavra sozinha na última linha */
+    text-wrap: pretty;
+}
+
+.feb-hero-title a {
+    color: inherit;
+}
+
+.feb-hero-meta {
+    margin-top: 32px;
+    letter-spacing: 0.03em;
+}
+
+.feb-hero-media {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius);
+    transform: translateZ(0); /* mantém o recorte arredondado durante o zoom (Safari) */
+}
+
+.feb-hero-media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 13 / 8;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+/* Uma coluna (tablet e celular): no formato dos cards da grade —
+   imagem → marcador → título → meta */
+@media (max-width: 991px) {
+    .feb-hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .feb-hero-media {
+        order: -1;
+    }
+
+    .feb-hero-media img {
+        aspect-ratio: 16 / 10;
+    }
+
+    .feb-hero-title {
+        margin-top: 12px;
+        font-size: clamp(26px, 3vw + 14px, 34px);
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    .feb-hero-meta {
+        margin-top: 10px;
+        letter-spacing: 0.065em;
+    }
+}
+
+/* Zoom nas imagens destacadas ao passar o mouse: destaque da home e cards de todas as grades.
+   No card, o gatilho é o card inteiro (ele todo é um link). Só o conteúdo amplia, dentro da moldura. */
+.feb-hero-media img,
+.feb-card-image img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.feb-hero-media:hover img,
+.feb-hero-media:focus-visible img,
+.feb-hero-text:has(.feb-hero-title a:hover) + .feb-hero-media img,
+.feb-card:hover .feb-card-image img,
+.feb-card:focus-within .feb-card-image img {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .feb-hero-media img,
+    .feb-card-image img {
+        transform: none !important;
+    }
+}
+
+/* 23.6. Barra de filtros (§6.2.2) */
+
+.feb-filters {
+    margin-bottom: var(--space-block);
+}
+
+.gh-main > .feb-filters:first-child {
+    margin-top: var(--space-block);
+}
+
+.feb-filters .nav {
+    display: flex;
+    gap: 6px;
+    /* Compensa o padding da pílula: o texto do 1º item alinha com a margem do conteúdo */
+    margin: 0 0 0 -12px;
+    padding: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    list-style: none;
+    scrollbar-width: none;
+}
+
+.feb-filters .nav::-webkit-scrollbar {
+    display: none;
+}
+
+.feb-filters .nav a {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-muted);
+    border-radius: var(--radius-pill);
+}
+
+.feb-filters .nav a:hover {
+    color: var(--color-ink);
+}
+
+.feb-filters .nav .nav-current a {
+    padding: 0 18px;
+    color: var(--color-bg);
+    background-color: var(--color-ink);
+}
+
+
+/* 23.7. Seções e grade de cards (§6.2.3) */
+
+.feb-section {
+    padding-top: var(--space-section);
+}
+
+.feb-section-head {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: var(--space-block);
+}
+
+.feb-section-title {
+    flex: 0 1 auto;
+}
+
+/* Separador após o título da seção: linha fina, cor sólida única */
+.feb-section-rule {
+    flex: 1 1 24px;
+    min-width: 24px;
+    height: 1px;
+    background-color: var(--color-rule);
+}
+
+.feb-more-link {
+    flex-shrink: 0;
+}
+
+.feb-section-title {
+    font-size: var(--fs-section);
+    line-height: 1.2;
+}
+
+/* Inclui o seletor do post: o Source usa .post-template ... { repeat(4, 1fr) },
+   mais específico, que estourava a largura no celular */
+.feb-grid,
+.gh-container.is-grid .gh-feed,
+.post-template .gh-container.is-grid .gh-feed {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 56px var(--grid-gap);
+    overflow: visible;
+}
+
+@media (max-width: 991px) {
+    .feb-grid,
+    .gh-container.is-grid .gh-feed,
+    .post-template .gh-container.is-grid .gh-feed {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .feb-grid,
+    .gh-container.is-grid .gh-feed,
+    .post-template .gh-container.is-grid .gh-feed {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+    }
+}
+
+/* Card de post */
+.feb-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.feb-card-image {
+    margin: 0 0 18px;
+    overflow: hidden;
+    border-radius: var(--radius);
+    transform: translateZ(0); /* mantém o recorte arredondado durante o zoom (Safari) */
+}
+
+.feb-card-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+.feb-card-tag {
+    margin: 0 0 12px;
+}
+
+.feb-card-title {
+    font-size: var(--fs-card);
+    line-height: 1.4;
+}
+
+.feb-card .gh-card-title-link {
+    color: var(--color-ink);
+}
+
+.feb-card .gh-card-title-link:focus-visible::after {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 4px;
+}
+
+.feb-card .feb-meta {
+    margin-top: 10px;
+}
+
+/* Listas do Source (tag, autor, páginas 2+ e "Leia também") */
+.gh-container {
+    margin-top: 0;
+    padding-block: 0;
+}
+
+.gh-container.is-grid:not(.has-sidebar) :is(.gh-container-title, .gh-main, .gh-more) {
+    grid-column: 1 / -1;
+}
+
+/* Sem divisores (Revisão): remove as linhas das listas e da barra lateral do Source */
+.gh-container .gh-card::before,
+.gh-container .gh-card::after,
+.gh-container.is-list .gh-card + .gh-card::before,
+.gh-container.is-grid .gh-card::before,
+.gh-container.is-grid .gh-card::after,
+.gh-container.has-sidebar .gh-main::after {
+    display: none;
+}
+
+.gh-container-title {
+    margin-bottom: var(--space-block);
+    padding-bottom: 0;
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: var(--fs-section);
+    font-weight: var(--fw-heading);
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    border-bottom: 0;
+}
+
+/* Lista de todas as tags (home) */
+.feb-tag-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.feb-tag-list a {
+    display: inline-flex;
+    gap: 10px;
+    align-items: baseline;
+    padding-block: 10px;
+    color: var(--color-ink);
+}
+
+.feb-tag-name {
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: 18px;
+    font-weight: var(--fw-heading);
+    line-height: 1.3;
+    transition: color 0.15s ease;
+}
+
+.feb-tag-list a:hover .feb-tag-name {
+    color: var(--color-accent-text);
+}
+
+.feb-tag-count {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted);
+}
+
+@media (max-width: 575px) {
+    .feb-tag-list a {
+        min-height: 44px;
+        align-items: center;
+    }
+}
+
+/* 23.8. Newsletter (§6.2.4) — card escuro (--color-ink) com texto na cor de fundo do site */
+
+.gh-cta.feb-newsletter {
+    display: block;
+    margin-top: var(--space-section);
+}
+
+.feb-newsletter-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    padding: 72px 64px;
+    color: var(--color-bg);
+    background-color: var(--color-ink);
+    border-radius: var(--radius);
+}
+
+/* Ícone de envelope em círculo azul; a cada 3,5s um halo se expande (mesmo efeito
+   do selo "Para assinantes", maior) e o envelope dá um pulo de 2px. Estático com
+   prefers-reduced-motion (regra global). */
+/* Ícone à esquerda do título, centrados na vertical */
+.feb-newsletter-head {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.feb-newsletter-icon {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    color: var(--color-bg);
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    animation: feb-newsletter-halo 3.5s ease-out 1.2s infinite;
+}
+
+.feb-newsletter-mail {
+    width: 30px;
+    height: 30px;
+    animation: feb-newsletter-bob 3.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s infinite;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feb-newsletter-card:hover .feb-newsletter-mail,
+.feb-newsletter-card:focus-within .feb-newsletter-mail {
+    animation-play-state: paused;
+    transform: translateY(-3px) scale(1.08);
+}
+
+@keyframes feb-newsletter-halo {
+    0% {
+        /* Halo um pouco mais claro e forte para aparecer sobre o fundo escuro */
+        box-shadow: 0 0 0 0 color-mix(in srgb, color-mix(in srgb, var(--color-accent) 80%, var(--color-bg)) 55%, transparent);
+    }
+
+    45%, 100% {
+        box-shadow: 0 0 0 14px color-mix(in srgb, var(--color-accent) 0%, transparent);
+    }
+}
+
+@keyframes feb-newsletter-bob {
+    0%, 14%, 100% {
+        transform: translateY(0);
+    }
+
+    6% {
+        transform: translateY(-2px);
+    }
+}
+
+.feb-newsletter-title {
+    max-width: 640px;
+    font-size: var(--fs-newsletter);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--color-bg);
+}
+
+/* Texto-padrão do Ghost de convite à inscrição */
+.feb-newsletter-text {
+    max-width: 560px;
+    margin: 16px 0 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-bg);
+}
+
+.feb-newsletter-form {
+    width: 100%;
+    max-width: 560px;
+    margin-top: 32px;
+}
+
+.feb-form-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.feb-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 54px;
+    padding: 0 22px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-bg);
+    /* Sobre o card escuro: campo claro translúcido; no foco o fundo clareia (sem borda nem contorno) */
+    background-color: color-mix(in srgb, var(--color-bg) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-bg) 18%, transparent);
+    border-radius: var(--radius-pill);
+    transition: background-color 0.15s ease;
+}
+
+.feb-input::placeholder {
+    color: color-mix(in srgb, var(--color-bg) 65%, transparent);
+}
+
+/* Foco sem borda nem contorno (Revisão); o fundo clareia para indicar o foco */
+.feb-input:focus,
+.feb-input:focus-visible {
+    border-color: color-mix(in srgb, var(--color-bg) 18%, transparent);
+    outline: none;
+    box-shadow: none;
+    background-color: color-mix(in srgb, var(--color-bg) 15%, transparent);
+}
+
+/* Aviso de validação no lugar do balão nativo (ver main.js) */
+.feb-form-hint {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--color-bg);
+}
+
+.feb-form-hint::before {
+    content: "!";
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-on-accent);
+    background-color: var(--color-accent);
+    border-radius: 50%;
+}
+
+.feb-form.is-invalid .feb-form-hint {
+    display: flex;
+}
+
+.feb-form .gh-button {
+    flex-shrink: 0;
+    height: 54px;
+    padding: 0 26px;
+}
+
+/* Sobre o escuro, o hover do botão clareia e o foco usa contorno claro */
+.feb-newsletter .gh-button:hover {
+    background-color: color-mix(in srgb, var(--color-accent) 85%, var(--color-bg));
+}
+
+.feb-newsletter :focus-visible {
+    outline-color: var(--color-bg);
+}
+
+.feb-form.loading .gh-button {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.feb-form-success,
+.feb-form-error {
+    display: none;
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.feb-form.success .feb-form-fields {
+    display: none;
+}
+
+.feb-form.success .feb-form-success,
+.feb-form.error .feb-form-error {
+    display: block;
+}
+
+.feb-form-success {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.feb-form-error {
+    color: #FFB4A8;
+}
+
+@media (max-width: 991px) {
+    .feb-newsletter-card {
+        padding: 56px 40px;
+    }
+
+    .feb-newsletter-form {
+        margin-top: 28px;
+    }
+
+    .feb-newsletter-title {
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 575px) {
+    .feb-newsletter-card {
+        padding: 40px 24px 32px;
+    }
+
+    .feb-newsletter-text {
+        font-size: 15px;
+    }
+
+    .feb-newsletter-head {
+        gap: 14px;
+    }
+
+    .feb-newsletter-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .feb-newsletter-mail {
+        width: 26px;
+        height: 26px;
+    }
+
+    .feb-newsletter-form {
+        margin-top: 24px;
+    }
+
+    .feb-form-fields {
+        flex-direction: column;
+    }
+
+    /* Em coluna, flex: 1 achatava o campo; altura fixa e largura total */
+    .feb-input {
+        flex: none;
+        width: 100%;
+    }
+
+    .feb-form .gh-button {
+        width: 100%;
+    }
+}
+
+/* 23.9. Post e página (§6.4, §6.5) */
+
+.gh-article {
+    --container-width: 1296px;
+}
+
+.gh-canvas {
+    --content-width: 680px;
+}
+
+.gh-article-header {
+    margin-block: var(--space-block);
+}
+
+/* Páginas: mesmo ritmo do post (o Source usava 72px/64px e 6vw no fim) */
+.page-template .gh-article-header {
+    margin-block: var(--space-block);
+}
+
+.page-template .gh-content:only-child > *:first-child:not(.kg-width-full) {
+    margin-top: var(--space-block);
+}
+
+.page-template .gh-content > *:last-child:not(.kg-width-full) {
+    margin-bottom: 0;
+}
+
+/* O cabeçalho do post (rótulo, título, resumo, meta) fica na coluna de texto
+   do Source (grid-column: main, 680px); só a imagem destacada usa a largura do contêiner. */
+
+.gh-article-tag {
+    margin-bottom: 16px;
+}
+
+.gh-article-title {
+    font-size: var(--fs-hero);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+}
+
+.gh-article-excerpt {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: var(--color-muted);
+}
+
+.gh-meta-share {
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin-top: 28px;
+}
+
+.feb-post-meta .gh-article-author-name {
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+}
+
+.feb-post-meta a {
+    color: var(--color-ink);
+}
+
+.gh-button-share {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-pill);
+    transition: border-color 0.15s ease;
+}
+
+.gh-button-share:hover {
+    border-color: var(--color-ink);
+}
+
+/* Imagem destacada na mesma coluna do título e do texto (680px) */
+.gh-article-header > .gh-article-image {
+    grid-column: main;
+    margin-top: var(--space-block);
+}
+
+.gh-article-image img {
+    aspect-ratio: 13 / 8;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+.gh-article-image figcaption,
+.gh-content figcaption {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--color-muted);
+}
+
+.gh-content {
+    --content-font-size: 18px;
+    line-height: 1.7;
+    letter-spacing: 0;
+}
+
+.gh-content h2 {
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.gh-content h3 {
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.gh-content a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+.gh-content a:hover {
+    color: var(--color-accent-text);
+}
+
+blockquote:not([class]) {
+    padding-left: 24px;
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: 24px;
+    font-weight: var(--fw-heading);
+    line-height: 1.4;
+    border-left: 3px solid var(--color-accent);
+}
+
+.gh-content pre,
+.gh-content :not(pre) > code {
+    background-color: var(--color-surface);
+    border-radius: var(--radius);
+}
+
+/* Cards do editor (Koenig) */
+.gh-content .kg-image-card:not(.kg-width-full) img,
+.gh-content .kg-gallery-image img,
+.kg-video-card,
+.kg-audio-card,
+.kg-file-card .kg-file-card-container,
+.kg-product-card-container,
+.kg-toggle-card,
+.kg-callout-card.kg-card {
+    border-radius: var(--radius);
+}
+
+.gh-content .kg-width-wide {
+    justify-self: center;
+    width: 100%;
+    max-width: 1024px;
+}
+
+.kg-gallery-row:not(:first-of-type) {
+    margin-top: 8px;
+}
+
+.kg-gallery-image:not(:first-of-type) {
+    margin-left: 8px;
+}
+
+.kg-bookmark-card .kg-bookmark-container {
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius);
+    box-shadow: none;
+}
+
+.kg-card.kg-button-card .kg-btn,
+.kg-product-card .kg-product-card-button,
+.kg-header-card .kg-header-card-button {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+}
+
+.kg-card.kg-button-card .kg-btn-accent {
+    background-color: var(--color-accent-solid);
+}
+
+.kg-callout-card.kg-callout-card-accent,
+.kg-callout-card.kg-callout-card-blue {
+    color: var(--color-ink);
+    background-color: var(--color-accent-tint);
+}
+
+.kg-callout-card-accent a {
+    color: var(--color-ink);
+}
+
+.gh-comments {
+    margin-top: var(--space-block);
+}
+
+.post-template .gh-container {
+    margin-top: 0;
+    padding-block: var(--space-section) 0;
+}
+
+/* 23.10. Tag, autor e lista (§6.6) */
+
+.gh-archive {
+    margin-block: var(--space-block);
+}
+
+/* Cabeçalho da tag/autor alinhado à grade de cards (o Source o recuava para a coluna central) */
+.gh-archive .gh-archive-inner,
+.gh-archive:not(.has-sidebar):not(.has-image) .gh-archive-inner {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.gh-archive-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Autor sem redes sociais nem localização: o rodapé vazio não ocupa espaço */
+.gh-author-meta:not(:has(a, .gh-author-location)) {
+    display: none;
+}
+
+.gh-archive .gh-article-excerpt {
+    max-width: 640px;
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.gh-archive .gh-article-image img {
+    border-radius: var(--radius);
+}
+
+
+/* 23.11. 404 (§6.7) */
+
+/* O miolo ocupa o espaço entre cabeçalho e rodapé (a .gh-main cresce no .gh-viewport)
+   e o aviso fica centralizado nele */
+.feb-error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.feb-error {
+    padding-block: var(--space-section);
+}
+
+.feb-error-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.feb-error-code {
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: 52px;
+    font-weight: var(--fw-heading);
+    line-height: 1;
+    color: var(--color-accent);
+}
+
+.feb-error-title {
+    margin-top: 20px;
+    font-size: var(--fs-newsletter);
+    line-height: 1.25;
+}
+
+.feb-error-text {
+    margin: 12px 0 32px;
+    color: var(--color-muted);
+}
+
+/* 23.12. Rodapé (§6.3) */
+
+.gh-footer.feb-footer {
+    margin-top: var(--space-section);
+    padding-block: 56px 32px;
+    font-size: 12px;
+    color: var(--color-on-accent);
+    background-color: var(--color-accent-solid);
+}
+
+.feb-footer a {
+    color: var(--color-on-accent);
+}
+
+.feb-footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.feb-footer :focus-visible {
+    outline-color: var(--color-on-accent);
+}
+
+.feb-footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 48px;
+}
+
+.feb-footer-logo {
+    font-family: var(--gh-font-heading, var(--font-heading));
+    font-size: 34px;
+    font-weight: var(--fw-heading);
+    line-height: 1;
+}
+
+.feb-footer-logo:hover {
+    text-decoration: none !important;
+}
+
+.feb-footer-logo img {
+    display: block;
+    max-height: 40px;
+    filter: brightness(0) invert(1);
+}
+
+.feb-footer-cols {
+    display: flex;
+    gap: 100px;
+}
+
+.feb-footer-heading {
+    margin-bottom: 10px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.feb-footer-col .nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.feb-footer-col .nav li {
+    line-height: 28px;
+}
+
+.feb-footer .nav-instagram a::after {
+    content: " \2197";
+}
+
+.feb-footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    font-size: 11px;
+}
+
+.feb-footer-legal {
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (max-width: 767px) {
+    .feb-footer-top {
+        flex-direction: column;
+    }
+
+    .feb-footer-cols {
+        gap: 64px;
+    }
+
+    .feb-footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* 23.13. Transição entre páginas (View Transitions entre documentos)
+   Só CSS: navegadores com suporte (Chrome/Edge 126+, Safari 18.2+) animam a troca
+   de página; os demais navegam normalmente. Não afeta Portal, busca nem a rolagem
+   infinita, que não trocam de documento. */
+
+@view-transition {
+    navigation: auto;
+}
+
+/* O cabeçalho é o mesmo em todas as páginas: fica parado durante a troca */
+#gh-navigation.feb-header {
+    view-transition-name: feb-header;
+}
+
+::view-transition-group(feb-header),
+::view-transition-old(feb-header),
+::view-transition-new(feb-header) {
+    animation: none;
+}
+
+/* Conteúdo: sai subindo levemente e entra vindo de baixo, com fade */
+::view-transition-old(root) {
+    animation: feb-page-out 180ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+    animation: feb-page-in 320ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+@keyframes feb-page-out {
+    to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes feb-page-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+/* 23.14. Movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0s !important;
+        animation-duration: 0s !important;
+        scroll-behavior: auto !important;
+    }
+
+    @view-transition {
+        navigation: none;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
 }

@@ -7,6 +7,7 @@
         <section class="gh-archive{{#if @custom.show_publication_info_sidebar}} has-sidebar{{/if}} gh-inner">
             <div class="gh-archive-inner">
                 <div class="gh-archive-wrapper">
+                    <p class="feb-label">{{t "Autor"}}</p>
                     <h1 class="gh-article-title is-title">
                         {{#if website}}
                             <a class="gh-author-social-link" href="{{website}}" target="_blank" rel="noopener">{{name}}</a>
@@ -17,6 +18,7 @@
                     {{#if bio}}
                         <p class="gh-article-excerpt">{{bio}}</p>
                     {{/if}}
+                    <p class="feb-meta">{{plural @root.pagination.total empty=(t "Nenhum artigo") singular=(t "% artigo") plural=(t "% artigos")}}</p>
                     <footer class="gh-author-meta">
                         <div class="gh-author-social">
                             {{#if twitter}}
@@ -59,6 +61,6 @@
         </section>
     {{/author}}
 
-    {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=@custom.show_publication_info_sidebar}}
+    {{> "components/post-list" feed="archive" showTitle=false showSidebar=@custom.show_publication_info_sidebar}}
 
 </main>

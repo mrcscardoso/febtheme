@@ -1,0 +1,33 @@
+{{!-- Conteúdo da home abaixo do destaque. Contexto: o post em destaque (seu id sai das seções). --}}
+
+{{#if @custom.section_1_tag}}
+    {{> "components/tag-section" tag=@custom.section_1_tag title=@custom.section_1_title exclude=id}}
+{{/if}}
+{{#if @custom.section_2_tag}}
+    {{> "components/tag-section" tag=@custom.section_2_tag title=@custom.section_2_title exclude=id}}
+{{/if}}
+
+{{!-- Nenhuma seção configurada: mostra os 6 posts mais recentes --}}
+{{#unless @custom.section_1_tag}}
+    {{#unless @custom.section_2_tag}}
+        {{#get "posts" filter="id:-{{id}}" include="tags" limit="6" as |recentes|}}
+            {{#if recentes}}
+                <section class="feb-section gh-outer">
+                    <div class="gh-inner">
+                        <header class="feb-section-head">
+                            <h2 class="feb-section-title">{{t "Últimas publicações"}}</h2>
+                            <span class="feb-section-rule" aria-hidden="true"></span>
+                        </header>
+                        <div class="feb-grid">
+                            {{#foreach recentes}}
+                                {{> "post-card"}}
+                            {{/foreach}}
+                        </div>
+                    </div>
+                </section>
+            {{/if}}
+        {{/get}}
+    {{/unless}}
+{{/unless}}
+
+{{> "components/tag-list"}}

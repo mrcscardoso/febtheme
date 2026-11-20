@@ -26,7 +26,7 @@
         {{!-- Text color is set by the script below, so fall back to a light background when scripting is disabled --}}
         @media (scripting: none) {
             :root {
-                --background-color: #fff;
+                --background-color: #F9F9F9;
             }
         }
     </style>
@@ -54,11 +54,11 @@
     {{ghost_head}}
 
 </head>
-<body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
+<body class="{{body_class}}">
 
 <div class="gh-viewport">
-    
-    {{> "components/navigation" navigationLayout=@custom.navigation_layout}}
+
+    {{> "components/navigation" navigationLayout="Logo on the left"}}
 
     {{{body}}}
     

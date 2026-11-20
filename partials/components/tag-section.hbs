@@ -1,0 +1,30 @@
+{{!-- Seção da home com 3 posts de uma tag (DESIGN.md §6.2.3).
+     Parâmetros: tag (slug), title (opcional; vazio = nome da tag), exclude (id do post em destaque).
+     O nome e a URL da tag vêm dos próprios posts (include="tags"); um {{#get "tags"}} aninhado
+     não enxerga os parâmetros do partial no filtro. --}}
+{{#get "posts" filter="tag:{{tag}}+id:-{{exclude}}" include="tags" limit="3" as |itens|}}
+    {{#if itens}}
+        <section class="feb-section gh-outer">
+            <div class="gh-inner">
+                <header class="feb-section-head">
+                    <h2 class="feb-section-title">
+                        {{#if ../title}}
+                            {{../title}}
+                        {{else}}
+                            {{#foreach itens limit="1"}}{{#foreach tags}}{{#match slug ../../../tag}}{{name}}{{/match}}{{/foreach}}{{/foreach}}
+                        {{/if}}
+                    </h2>
+                    <span class="feb-section-rule" aria-hidden="true"></span>
+                    {{#foreach itens limit="1"}}{{#foreach tags}}{{#match slug ../../../tag}}
+                        <a class="feb-more-link" href="{{url}}">{{t "Ver todos"}} {{> "icons/arrow-up-right"}}</a>
+                    {{/match}}{{/foreach}}{{/foreach}}
+                </header>
+                <div class="feb-grid">
+                    {{#foreach itens}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                </div>
+            </div>
+        </section>
+    {{/if}}
+{{/get}}

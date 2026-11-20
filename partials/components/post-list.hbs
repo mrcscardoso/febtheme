@@ -1,12 +1,12 @@
 {{!--
     Parameters:
-    * feed (index, home, archive, recent)
-    * postFeedStyle (list, grid)
+    * feed (index, archive)
     * showTitle (true, false)
     * showSidebar (true, false)
 --}}
 
-<section class="gh-container is-{{#match postFeedStyle "List"}}list{{else}}grid{{/match}}{{#if showSidebar}} has-sidebar{{/if}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}} gh-outer">
+{{!-- Sempre em grade, igual à home (classe feb-grid). .gh-feed é usada pela rolagem infinita (pagination.js). --}}
+<section class="gh-container is-grid{{#if showSidebar}} has-sidebar{{/if}} gh-outer">
     <div class="gh-container-inner gh-inner">
         
         {{#if showTitle}}
@@ -15,50 +15,14 @@
             </h2>
         {{/if}}
 
-        <main class="gh-main">
-            <div class="gh-feed">
-
-                {{!-- Homepage --}}
-                {{#match feed "home"}}
-                    {{#match @custom.header_style "Highlight"}}
-                        {{#if @custom.show_featured_posts}}
-                            {{#match posts.length ">=" 4}}
-                                {{#get "posts" include="authors" limit="16"}}
-                                    {{#foreach posts from="5"}}
-                                        {{> "post-card" lazyLoad=true}}
-                                    {{/foreach}}
-                                {{/get}}
-                            {{/match}}
-                        {{else}}
-                            {{#match posts.length ">=" 10}}
-                                {{#get "posts" include="authors" limit="22"}}
-                                    {{#foreach posts from="11"}}
-                                        {{> "post-card" lazyLoad=true}}
-                                    {{/foreach}}
-                                {{/get}}
-                            {{/match}}
-                        {{/if}}
-                    {{else match @custom.header_style "Magazine"}}
-                        {{#match posts.length ">=" 7}}
-                            {{#get "posts" include="authors" limit="19"}}
-                                {{#foreach posts from="8"}}
-                                    {{> "post-card" lazyLoad=true}}
-                                {{/foreach}}
-                            {{/get}}
-                        {{/match}}
-                    {{else}}
-                        {{#get "posts" include="authors" limit=@config.posts_per_page}}
-                            {{#foreach posts}}
-                                {{> "post-card" lazyLoad=true}}
-                            {{/foreach}}
-                        {{/get}}
-                    {{/match}}
-                {{/match}}
+        {{!-- div (não main): os templates que incluem esta lista já têm o <main> da página --}}
+        <div class="gh-main">
+            <div class="gh-feed feb-grid">
 
                 {{!-- All posts --}}
                 {{#match feed "index"}}
                     {{#match pagination.page 2}}
-                        {{#get "posts" include="authors" limit=@config.posts_per_page as |recent|}}
+                        {{#get "posts" include="tags" limit=@config.posts_per_page as |recent|}}
                             {{#foreach recent}}
                                 {{> "post-card"}}
                             {{/foreach}}
@@ -83,7 +47,7 @@
                     <a href="{{@site.url}}/page/2/">{{t "See all"}} {{> "icons/arrow"}}</a>
                 </div>
             {{/match}}
-        </main>
+        </div>
 
         {{#if showSidebar}}
             <aside class="gh-sidebar">

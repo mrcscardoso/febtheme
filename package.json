@@ -1,8 +1,8 @@
 {
     "name": "febtheme",
-    "description": "A default theme for the Ghost publishing platform",
+    "description": "Tema oficial do Farmaco em Bolus",
     "demo": "https://source.ghost.io",
-    "version": "1.7.6",
+    "version": "1.0.0",
     "engines": {
         "ghost": ">=5.0.0",
         "node": ">=22.12.0"
@@ -89,103 +89,34 @@
         },
         "card_assets": true,
         "custom": {
-            "navigation_layout": {
-                "type": "select",
-                "options": [
-                    "Logo in the middle",
-                    "Logo on the left",
-                    "Stacked"
-                ],
-                "default": "Logo in the middle"
-            },
             "site_background_color": {
                 "type": "color",
-                "default": "#ffffff"
-            },
-            "header_and_footer_color": {
-                "type": "select",
-                "options": [
-                    "Background color",
-                    "Accent color"
-                ],
-                "default": "Background color"
-            },
-            "title_font": {
-                "type": "select",
-                "options": [
-                    "Modern sans-serif",
-                    "Elegant serif",
-                    "Consistent mono"
-                ],
-                "default": "Modern sans-serif"
-            },
-            "body_font": {
-                "type": "select",
-                "options": [
-                    "Modern sans-serif",
-                    "Elegant serif"
-                ],
-                "default": "Modern sans-serif"
+                "default": "#F9F9F9"
             },
             "signup_heading": {
                 "type": "text",
-                "description": "Used in your footer across your theme, defaults to site title when empty"
+                "description": "Título do bloco de newsletter",
+                "default": "Boas ideias merecem um lugar na sua caixa."
             },
-            "signup_subheading": {
-                "type": "text",
-                "description": "Defaults to site description when empty"
-            },
-            "header_style": {
-                "type": "select",
-                "options": [
-                    "Landing",
-                    "Highlight",
-                    "Magazine",
-                    "Search",
-                    "Off"
-                ],
-                "description": "Landing is recommended for all sites, Highlight & Magazine for those with more content",
-                "default": "Landing",
-                "group": "homepage"
-            },
-            "header_text": {
+            "section_1_tag": {
                 "type": "text",
                 "group": "homepage",
-                "description": "Defaults to site description when empty",
-                "visibility": "header_style:[Landing, Search]"
+                "description": "Slug da tag da 1ª seção da home (ex.: design). Vazio = mostra os posts mais recentes"
             },
-            "background_image": {
-                "type": "boolean",
-                "default": true,
-                "description": "Use the publication cover set on the Brand tab as your background",
+            "section_1_title": {
+                "type": "text",
                 "group": "homepage",
-                "visibility": "header_style:[Landing, Search]"
+                "description": "Título da 1ª seção (ex.: Design & criatividade). Vazio = nome da tag"
             },
-            "show_featured_posts": {
-                "type": "boolean",
-                "default": false,
+            "section_2_tag": {
+                "type": "text",
                 "group": "homepage",
-                "visibility": "header_style:[Highlight, Magazine]"
+                "description": "Slug da tag da 2ª seção da home (ex.: tecnologia)"
             },
-            "post_feed_style": {
-                "type": "select",
-                "options": [
-                    "List",
-                    "Grid"
-                ],
-                "default": "List",
-                "group": "homepage"
-            },
-            "show_images_in_feed": {
-                "type": "boolean",
-                "default": true,
+            "section_2_title": {
+                "type": "text",
                 "group": "homepage",
-                "visibility": "post_feed_style:List"
-            },
-            "show_author": {
-                "type": "boolean",
-                "default": true,
-                "group": "homepage"
+                "description": "Título da 2ª seção (ex.: Tecnologia & futuro). Vazio = nome da tag"
             },
             "show_publish_date": {
                 "type": "boolean",

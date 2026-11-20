@@ -1,12 +1,25 @@
 {{!< default}}
-{{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
+{{!-- Home (DESIGN.md §6.2): destaque, barra de filtros, seções por tag e newsletter --}}
 
-{{> "components/header" headerStyle=@custom.header_style}}
+<main id="gh-main" class="gh-main feb-home">
 
-{{#match @custom.header_style "Magazine"}}
-    {{> "components/featured" showFeatured=@custom.show_featured_posts limit=4}}
-{{/match}}
+    {{#get "posts" filter="featured:true" include="tags" limit="1" as |destaque|}}
+        {{#if destaque}}
+            {{#foreach destaque}}
+                {{> "components/hero"}}
+                {{> "components/home-sections"}}
+            {{/foreach}}
+        {{else}}
+            {{!-- Sem post em destaque: usa o mais recente --}}
+            {{#get "posts" include="tags" limit="1" as |recente|}}
+                {{#foreach recente}}
+                    {{> "components/hero"}}
+                    {{> "components/home-sections"}}
+                {{/foreach}}
+            {{/get}}
+        {{/if}}
+    {{/get}}
 
-{{> "components/cta"}}
+    {{> "components/cta" email_field_id="newsletter-email-home"}}
 
-{{> "components/post-list" feed="home" postFeedStyle=@custom.post_feed_style showTitle=true showSidebar=@custom.show_publication_info_sidebar}}
+</main>

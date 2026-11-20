@@ -1,9 +1,17 @@
-<form class="gh-form" data-members-form>
-    <input class="gh-form-input" id="{{email_field_id}}" name="email" type="email" placeholder="{{t "jamie@example.com"}}" required data-members-email>
-    <button class="gh-button" type="submit" aria-label="{{t "Subscribe"}}">
-        <span><span>{{t "Subscribe"}}</span> {{> "icons/arrow"}}</span>
-        {{> "icons/loader"}}
-        <span>{{t "Email sent"}}</span>
-    </button>
-    <p data-members-error></p>
+{{!-- Formulário de inscrição. O Ghost (Portal) aplica as classes loading, success e error no <form>.
+     O aviso de validação (.feb-form-hint) substitui o balão nativo do navegador; ver assets/js/main.js.
+     Parâmetro: email_field_id --}}
+<form class="feb-form" data-members-form="subscribe">
+    <div class="feb-form-fields">
+        <label class="feb-sr-only" for="{{email_field_id}}">{{t "E-mail"}}</label>
+        <input class="feb-input" id="{{email_field_id}}" name="email" type="email" autocomplete="email" placeholder="{{t "Seu melhor e-mail"}}" required data-members-email aria-describedby="{{email_field_id}}-hint">
+        <button class="gh-button" type="submit">{{t "Quero assinar"}}</button>
+    </div>
+    <p class="feb-form-hint" id="{{email_field_id}}-hint" role="alert"
+        data-missing="{{t "Digite seu e-mail para assinar."}}"
+        data-mismatch="{{t "Confira o e-mail: parece incompleto."}}"></p>
+    <div class="feb-form-messages" aria-live="polite">
+        <p class="feb-form-success">{{t "Pronto! Confira seu e-mail para confirmar a inscrição."}}</p>
+        <p class="feb-form-error">{{t "Não foi possível concluir agora. Tente de novo em instantes."}}</p>
+    </div>
 </form>

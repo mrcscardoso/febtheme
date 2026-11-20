@@ -1,0 +1,13 @@
+{{!< default}}
+{{!-- Página não encontrada (DESIGN.md §6.7). Cabeçalho e rodapé vêm do default.hbs; aqui só o aviso. --}}
+
+<main id="gh-main" class="gh-main feb-error-page">
+    <section class="feb-error gh-outer">
+        <div class="feb-error-inner gh-inner">
+            <p class="feb-error-code" aria-hidden="true">{{statusCode}}</p>
+            <h1 class="feb-error-title is-title">{{t "Página não encontrada"}}</h1>
+            <p class="feb-error-text">{{t "O endereço pode ter mudado ou não existe mais."}}</p>
+            <a class="gh-button" href="{{@site.url}}">{{t "Voltar ao início"}}</a>
+        </div>
+    </section>
+</main>

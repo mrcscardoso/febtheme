@@ -1,0 +1,25 @@
+{{!-- Lista de todas as tags públicas com posts (home, depois das seções). --}}
+{{#get "tags" filter="visibility:public" include="count.posts" order="name asc" limit="100" as |todasTags|}}
+    {{#if todasTags}}
+        <section class="feb-section feb-tags gh-outer">
+            <div class="gh-inner">
+                <header class="feb-section-head">
+                    <h2 class="feb-section-title">{{t "Todas as tags"}}</h2>
+                    <span class="feb-section-rule" aria-hidden="true"></span>
+                </header>
+                <ul class="feb-tag-list">
+                    {{#foreach todasTags}}
+                        {{#if count.posts}}
+                            <li>
+                                <a href="{{url}}">
+                                    <span class="feb-tag-name">{{name}}</span>
+                                    <span class="feb-tag-count">{{plural count.posts empty=(t "Nenhum artigo") singular=(t "% artigo") plural=(t "% artigos")}}</span>
+                                </a>
+                            </li>
+                        {{/if}}
+                    {{/foreach}}
+                </ul>
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
